@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Management System</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #container {
+        margin: 50px auto;
+        padding: 20px;
+        width: 600px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="float"],
+    button {
+        margin: 10px 0;
+        padding: 5px;
+        width: 80%;
+        box-sizing: border-box;
+    }
+</style>
+</head>
+<body>
+
+<div id="container">
+    <h2>Student Management System</h2>
+    <button onclick="addStudent()">Add Student Details</button>
+    <button onclick="findStudentByRoll()">Find Student by Roll Number</button>
+    <button onclick="findStudentByName()">Find Student by First Name</button>
+    <button onclick="findStudentByCourse()">Find Student by Course ID</button>
+    <button onclick="showTotalStudents()">Total Number of Students</button>
+    <button onclick="deleteStudent()">Delete Student by Roll Number</button>
+    <button onclick="updateStudent()">Update Student Details by Roll Number</button>
+</div>
+
+<script>
+    // Define an array to store student details
+    var students = [];
+
+    // Function to add a new student
+    function addStudent() {
+        var student = {};
+        student.fname = prompt("Enter First Name:");
+        student.lname = prompt("Enter Last Name:");
+        student.roll = parseInt(prompt("Enter Roll Number:"));
+        student.cgpa = parseFloat(prompt("Enter CGPA:"));
+        student.cid = [];
+        for (var i = 0; i < 5; i++) {
+            var courseID = parseInt(prompt("Enter Course ID " + (i + 1) + ":"));
+            student.cid.push(courseID);
+        }
+        students.push(student);
+        alert("Student added successfully!");
+    }
+
+    // Function to find a student by roll number
+    function findStudentByRoll() {
+        var rollNumber = parseInt(prompt("Enter Roll Number to search:"));
+        var found = false;
+        for (var i = 0; i < students.length; i++) {
+            if (students[i].roll === rollNumber) {
+                alert("Student found!\nFirst Name: " + students[i].fname +
+                    "\nLast Name: " + students[i].lname +
+                    "\nCGPA: " + students[i].cgpa +
+                    "\nCourse IDs: " + students[i].cid.join(", "));
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            alert("Student not found!");
+        }
+    }
+
+    // Function to find a student by first name
+    function findStudentByName() {
+        var firstName = prompt("Enter First Name to search:");
+        var found = false;
+        for (var i = 0; i < students.length; i++) {
+            if (students[i].fname.toLowerCase() === firstName.toLowerCase()) {
+                alert("Student found!\nFirst Name: " + students[i].fname +
+                    "\nLast Name: " + students[i].lname +
+                    "\nRoll Number: " + students[i].roll +
+                    "\nCGPA: " + students[i].cgpa +
+                    "\nCourse IDs: " + students[i].cid.join(", "));
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            alert("Student not found!");
+        }
+    }
+
+    // Function to find students by course ID
+    function findStudentByCourse() {
+        var courseID = parseInt(prompt("Enter Course ID to search:"));
+        var found = false;
+        for (var i = 0; i < students.length; i++) {
+            if (students[i].cid.includes(courseID)) {
+                alert("Student found!\nFirst Name: " + students[i].fname +
+                    "\nLast Name: " + students[i].lname +
+                    "\nRoll Number: " + students[i].roll +
+                    "\nCGPA: " + students[i].cgpa +
+                    "\nCourse IDs: " + students[i].cid.join(", "));
+                found = true;
+            }
+        }
+        if (!found) {
+            alert("Student not found for Course ID: " + courseID);
+        }
+    }
+
+    // Function to show total number of students
+    function showTotalStudents() {
+        alert("Total Number of Students: " + students.length);
+    }
+
+    // Function to delete a student by roll number
+    function deleteStudent() {
+        var rollNumber = parseInt(prompt("Enter Roll Number to delete:"));
+        var index = -1;
+        for (var i = 0; i < students.length; i++) {
+            if (students[i].roll === rollNumber) {
+                index = i;
+                break;
+            }
+        }
+        if (index !== -1) {
+            students.splice(index, 1);
+            alert("Student deleted successfully!");
+        } else {
+            alert("Student not found!");
+        }
+    }
+
+    // Function to update student details by roll number
+    function updateStudent() {
+        var rollNumber = parseInt(prompt("Enter Roll Number to update:"));
+        var index = -1;
+        for (var i = 0; i < students.length; i++) {
+            if (students[i].roll === rollNumber) {
+                index = i;
+                break;
+            }
+        }
+        if (index !== -1) {
+            students[index].fname = prompt("Enter New First Name:");
+            students[index].lname = prompt("Enter New Last Name:");
+            students[index].roll = parseInt(prompt("Enter New Roll Number:"));
+            students[index].cgpa = parseFloat(prompt("Enter New CGPA:"));
+            students[index].cid = [];
+            for (var i = 0; i < 5; i++) {
+                var courseID = parseInt(prompt("Enter New Course ID " + (i + 1) + ":"));
+                students[index].cid.push(courseID);
+            }
+            alert("Student details updated successfully!");
+        } else {
+            alert("Student not found!");
+        }
+    }
+</script>
+
+</body>
+</html>
